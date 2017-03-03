@@ -37,6 +37,12 @@
 		<?php echo $form->error($model,'season_series_number'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'season_description'); ?>
+		<?php echo $form->textField($model,'season_description',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'season_description'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

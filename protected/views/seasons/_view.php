@@ -21,5 +21,9 @@
 	<?php echo CHtml::encode($data->season_series_number); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('season_description')); ?>:</b>
+	<?php echo CHtml::encode($data->season_description); ?>
+	<br />
+
 
 </div>

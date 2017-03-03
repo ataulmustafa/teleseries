@@ -24,5 +24,6 @@ $this->menu=array(
 		'id',
 		'series_name',
 		'created_by',
+		'series_description',
 	),
 )); ?>

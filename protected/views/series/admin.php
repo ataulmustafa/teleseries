@@ -48,6 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'series_name',
 		'created_by',
+		'series_description',
 		array(
 			'class'=>'CButtonColumn',
 		),

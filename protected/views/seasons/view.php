@@ -25,5 +25,6 @@ $this->menu=array(
 		'season_name',
 		'season_number',
 		'season_series_number',
+		'season_description',
 	),
 )); ?>

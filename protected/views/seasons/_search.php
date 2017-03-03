@@ -31,6 +31,11 @@
 		<?php echo $form->textField($model,'season_series_number'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'season_description'); ?>
+		<?php echo $form->textField($model,'season_description',array('size'=>60,'maxlength'=>255)); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

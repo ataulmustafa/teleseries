@@ -30,20 +30,66 @@ class ApiController extends Controller
     // Actions
     public function actionList()
     {
+        // Get the respective model instance
+        switch($_GET['model'])
+        {
+            case 'series' || 'seasons' || 'episode':
+                $models = $_GET['model']::model()->findAll();
+                break;
+            default:
+                // Model not implemented error
+                $this->_sendResponse(501, sprintf(
+                    'Error: Mode <b>list</b> is not implemented for model <b>%s</b>',
+                    $_GET['model']) );
+                Yii::app()->end();
+        }
+        // Did we get some results?
+        if(empty($models)) {
+            // No
+            $this->_sendResponse(200,
+                sprintf('No items where found for model <b>%s</b>', $_GET['model']) );
+        } else {
+            // Prepare response
+            $rows = array();
+            foreach($models as $model)
+                $rows[] = $model->attributes;
+            // Send the response
+            $this->_sendResponse(200, CJSON::encode($rows));
+        }
     }
     public function actionView()
     {
+        // Check if id was submitted via GET
+        if(!isset($_GET['id']))
+            $this->_sendResponse(500, 'Error: Parameter <b>id</b> is missing' );
+
+        switch($_GET['model'])
+        {
+            // Find respective model
+            case  'series' || 'seasons' || 'episode':
+                $model = $_GET['model']::model()->findByPk($_GET['id']);
+                break;
+            default:
+                $this->_sendResponse(501, sprintf(
+                    'Mode <b>view</b> is not implemented for model <b>%s</b>',
+                    $_GET['model']) );
+                Yii::app()->end();
+        }
+        // Did we find the requested model? If not, raise an error
+        if(is_null($model))
+            $this->_sendResponse(404, 'No Item found with id '.$_GET['id']);
+        else
+            $this->_sendResponse(200, CJSON::encode($model));
     }
     public function actionCreate()
     {
-        //print_r($_GET);exit;
         switch($_GET['model'])
         {
             // Get an instance of the respective model
             case 'series':
                 $model = new Series;
                 break;
-            case 'season':
+            case 'seasons':
                 $model = new Seasons;
                 break;
             case 'episode':

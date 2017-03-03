@@ -17,5 +17,9 @@
 	<?php echo CHtml::encode($data->created_by); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('series_description')); ?>:</b>
+	<?php echo CHtml::encode($data->series_description); ?>
+	<br />
+
 
 </div>

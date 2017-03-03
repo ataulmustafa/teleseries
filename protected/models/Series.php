@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $series_name
  * @property integer $created_by
+ * @property string $series_description
  *
  * The followings are the available model relations:
  * @property TblSeasons[] $tblSeasons
@@ -31,10 +32,10 @@ class Series extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('created_by', 'numerical', 'integerOnly'=>true),
-			array('series_name', 'length', 'max'=>255),
+			array('series_name, series_description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, series_name, created_by', 'safe', 'on'=>'search'),
+			array('id, series_name, created_by, series_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +61,7 @@ class Series extends CActiveRecord
 			'id' => 'ID',
 			'series_name' => 'Series Name',
 			'created_by' => 'Created By',
+			'series_description' => 'Series Description',
 		);
 	}
 
@@ -84,6 +86,7 @@ class Series extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('series_name',$this->series_name,true);
 		$criteria->compare('created_by',$this->created_by);
+		$criteria->compare('series_description',$this->series_description,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

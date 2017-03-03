@@ -18,12 +18,17 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'series_name'); ?>
-		<?php echo $form->textField($model,'series_name'); ?>
+		<?php echo $form->textField($model,'series_name',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'created_by'); ?>
 		<?php echo $form->textField($model,'created_by'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'series_description'); ?>
+		<?php echo $form->textField($model,'series_description',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
 	<div class="row buttons">

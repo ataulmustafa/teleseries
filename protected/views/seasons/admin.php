@@ -49,6 +49,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'season_name',
 		'season_number',
 		'season_series_number',
+		'season_description',
 		array(
 			'class'=>'CButtonColumn',
 		),

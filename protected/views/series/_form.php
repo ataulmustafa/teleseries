@@ -21,7 +21,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'series_name'); ?>
-		<?php echo $form->textField($model,'series_name'); ?>
+		<?php echo $form->textField($model,'series_name',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'series_name'); ?>
 	</div>
 
@@ -29,6 +29,12 @@
 		<?php echo $form->labelEx($model,'created_by'); ?>
 		<?php echo $form->textField($model,'created_by'); ?>
 		<?php echo $form->error($model,'created_by'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'series_description'); ?>
+		<?php echo $form->textField($model,'series_description',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'series_description'); ?>
 	</div>
 
 	<div class="row buttons">
