@@ -28,7 +28,7 @@ class SeasonsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','byseries'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -169,5 +169,17 @@ class SeasonsController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionBySeries($id){
+		echo 'here';
+//		$list= Yii::app()->db->createCommand('select * from tbl_seasons where season_series_number=:category')->bindValue('category',$id)->queryAll();
+//		print_r($list);
+//		print_r($_GET);
+//		print_r(Yii::app());
+
+		Seasons::model()->checkAccess($id);
+
+		exit;
 	}
 }

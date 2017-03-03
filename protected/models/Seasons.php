@@ -101,4 +101,10 @@ class Seasons extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public function checkAccess($seriesId)
+	{
+		echo 'id: '.$seriesId.' ...';
+		echo 'check access model called...';
+	}
 }
