@@ -172,14 +172,8 @@ class SeasonsController extends Controller
 	}
 
 	public function actionBySeries($id){
-		echo 'here';
-//		$list= Yii::app()->db->createCommand('select * from tbl_seasons where season_series_number=:category')->bindValue('category',$id)->queryAll();
-//		print_r($list);
-//		print_r($_GET);
-//		print_r(Yii::app());
-
-		Seasons::model()->checkAccess($id);
-
-		exit;
+	    // Find Seasons of selected series
+		$model = Seasons::model()->getSeasonsBySeries($id);
+        $this->render('byseries',array('model'=>$model));
 	}
 }

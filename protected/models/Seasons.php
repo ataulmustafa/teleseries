@@ -102,9 +102,11 @@ class Seasons extends CActiveRecord
 		return parent::model($className);
 	}
 
-	public function checkAccess($seriesId)
+	public function getSeasonsBySeries($seriesId)
 	{
-		echo 'id: '.$seriesId.' ...';
-		echo 'check access model called...';
+        $criteria = new CDbCriteria();
+        $criteria->compare('season_series_number', '='. $seriesId);
+        $seasons = Seasons::model()->findAll($criteria);
+        return $seasons;
 	}
 }
