@@ -3,7 +3,7 @@
 /* @var $data Episode */
 ?>
 
-<div class="view">
+<div class="view grid-thumbnails">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
@@ -33,5 +33,11 @@
 	<?php echo CHtml::encode($data->description); ?>
 	<br />
 
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('season_id')); ?>:</b>
+	<?php echo CHtml::encode($data->season_id); ?>
+	<br />
+
+	*/ ?>
 
 </div>

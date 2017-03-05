@@ -55,6 +55,12 @@
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'season_id'); ?>
+		<?php echo $form->textField($model,'season_id'); ?>
+		<?php echo $form->error($model,'season_id'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

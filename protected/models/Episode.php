@@ -11,6 +11,10 @@
  * @property string $actor
  * @property string $director
  * @property string $description
+ * @property integer $season_id
+ *
+ * The followings are the available model relations:
+ * @property TblSeasons $season
  */
 class Episode extends CActiveRecord
 {
@@ -31,10 +35,11 @@ class Episode extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('episode_name', 'required'),
+			array('season_id', 'numerical', 'integerOnly'=>true),
 			array('episode_name, thumbnail, poster, actor, director, description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, episode_name, thumbnail, poster, actor, director, description', 'safe', 'on'=>'search'),
+			array('id, episode_name, thumbnail, poster, actor, director, description, season_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,6 +51,7 @@ class Episode extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'season' => array(self::BELONGS_TO, 'TblSeasons', 'season_id'),
 		);
 	}
 
@@ -62,6 +68,7 @@ class Episode extends CActiveRecord
 			'actor' => 'Actor',
 			'director' => 'Director',
 			'description' => 'Description',
+			'season_id' => 'Season',
 		);
 	}
 
@@ -90,6 +97,7 @@ class Episode extends CActiveRecord
 		$criteria->compare('actor',$this->actor,true);
 		$criteria->compare('director',$this->director,true);
 		$criteria->compare('description',$this->description,true);
+		$criteria->compare('season_id',$this->season_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -106,4 +114,13 @@ class Episode extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+
+    public function getEpisodesBySeasons($seasonId)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('season_id', '='. $seasonId);
+        $episode = Episode::model()->findAll($criteria);
+        return $episode;
+    }
 }

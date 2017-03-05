@@ -28,5 +28,6 @@ $this->menu=array(
 		'actor',
 		'director',
 		'description',
+		'season_id',
 	),
 )); ?>

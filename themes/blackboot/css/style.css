@@ -545,3 +545,11 @@ p.hint { float:left; display:block;}
 }
 
 .col-md-3 { float: left; }
+
+.grid-thumbnails{
+  display: inline-block;
+  border: 1px solid lightgray;
+  padding: 15px;
+  border-radius: 3px;
+  max-width: 275px;
+}
