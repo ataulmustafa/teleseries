@@ -45,7 +45,8 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="#"><?php echo Yii::app()->name ?></a>
+<!--				<a class="brand" href="#">--><?php //echo Yii::app()->name ?><!--</a>-->
+				<?php echo CHtml::link(Yii::app()->name, Yii::app()->baseUrl, array('class'=>'brand')) ?>
 				<div class="nav-collapse">
 					<?php $this->widget('zii.widgets.CMenu',array(
 						'htmlOptions' => array( 'class' => 'nav' ),

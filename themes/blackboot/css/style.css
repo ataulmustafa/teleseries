@@ -553,3 +553,7 @@ p.hint { float:left; display:block;}
   border-radius: 3px;
   max-width: 275px;
 }
+
+.span3 .portlet .content{
+  display: inline-block;
+}

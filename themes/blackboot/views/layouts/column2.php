@@ -10,6 +10,10 @@
 				'htmlOptions'=>array('class'=>'sidebar'),
 			));
 			$this->endWidget();
+
+		 	$this->widget('application.extensions.login.XLoginPortlet',array(
+		 		'visible'=>Yii::app()->user->isGuest,
+		 	));
 		?>
 		</div><!-- sidebar span3 -->
 

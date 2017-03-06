@@ -1,3 +1,4 @@
+<h1>Seasons</h1>
 <?php
 /**
  * Created by PhpStorm.
@@ -22,7 +23,7 @@ $this->menu=array(
 );
 
 
-
+//print_r($model);exit;
 foreach ($model as $data){
 ?>
     <div class="view grid-thumbnails">
@@ -47,7 +48,7 @@ foreach ($model as $data){
         <?php echo CHtml::encode($data->season_description); ?>
         <br />
 
-        <b><?php echo CHtml::link('View Episodes','../../episode/byseasons/'.$data->id); ?></b>
+        <b><?php echo CHtml::link('View Episodes',$this->createAbsoluteUrl('episode/byseasons/'.$data->id)); ?></b>
 
     </div>
 <?php

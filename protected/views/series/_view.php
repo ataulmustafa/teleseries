@@ -21,6 +21,6 @@
 	<?php echo CHtml::encode($data->series_description); ?>
 	<br />
 
-    <b><?php echo CHtml::link('View seasons','../seasons/byseries/'.$data->id); ?></b>
+    <b><?php echo CHtml::link('View seasons',$this->createAbsoluteUrl('seasons/byseries/'.$data->id)); ?></b>
 
 </div>

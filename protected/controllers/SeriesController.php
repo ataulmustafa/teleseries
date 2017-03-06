@@ -123,8 +123,10 @@ class SeriesController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Series');
+//		$loginForm = new LoginForm();
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+//			'loginForm'=>$loginForm
 		));
 	}
 
