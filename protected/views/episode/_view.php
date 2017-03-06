@@ -32,7 +32,7 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
 	<?php echo CHtml::encode($data->description); ?>
 	<br />
-
+	<b><?php echo CHtml::link('View Detail',$this->createAbsoluteUrl('episode/details/'.$data->id)); ?></b>
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('season_id')); ?>:</b>
 	<?php echo CHtml::encode($data->season_id); ?>

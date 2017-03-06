@@ -28,7 +28,7 @@ class EpisodeController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','byseasons'),
+				'actions'=>array('index','view','byseasons','details'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -176,4 +176,12 @@ class EpisodeController extends Controller
         $model = Episode::model()->getEpisodesBySeasons($id);
         $this->render('byseasons',array('model'=>$model));
     }
+
+
+	public function actionDetails($id){
+		// Find Seasons of selected series
+		$model = Episode::model()->getEpisodeDetail($id);
+
+		$this->render('details',array('data'=>$model));
+	}
 }

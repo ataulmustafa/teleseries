@@ -47,8 +47,8 @@ class Series extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblSeasons' => array(self::HAS_MANY, 'TblSeasons', 'season_series_number'),
-			'createdBy' => array(self::BELONGS_TO, 'TblUser', 'created_by'),
+			'seasons' => array(self::HAS_MANY, 'Seasons', 'season_series_number'),
+			'createdBy' => array(self::BELONGS_TO, 'User', 'created_by'),
 		);
 	}
 
@@ -103,4 +103,9 @@ class Series extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+//	public function test(){
+//		$series=Series::model()->with('seasons','episode')->findAll();
+//		print_r($series);exit;
+//	}
 }

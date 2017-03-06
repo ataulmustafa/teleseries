@@ -173,7 +173,7 @@ class SeasonsController extends Controller
 
 	public function actionBySeries($id){
 
-		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/api/seasons";
+		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/api/seasons/$id";
 		//  Initiate curl
 		$ch = curl_init();
 		// Disable SSL verification

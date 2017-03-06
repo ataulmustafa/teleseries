@@ -1,27 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "tbl_seasons".
+ * This is the model class for table "tbl_actors".
  *
- * The followings are the available columns in table 'tbl_seasons':
+ * The followings are the available columns in table 'tbl_actors':
  * @property integer $id
- * @property string $season_name
- * @property integer $season_number
- * @property integer $season_series_number
- * @property string $season_description
+ * @property string $actor_name
+ * @property integer $episode_id
  *
  * The followings are the available model relations:
- * @property TblEpisode[] $tblEpisodes
- * @property TblSeries $seasonSeriesNumber
+ * @property TblEpisode $episode
  */
-class Seasons extends CActiveRecord
+class Actors extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_seasons';
+		return 'tbl_actors';
 	}
 
 	/**
@@ -32,12 +29,11 @@ class Seasons extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('season_number, season_series_number', 'numerical', 'integerOnly'=>true),
-			array('season_name', 'length', 'max'=>180),
-			array('season_description', 'length', 'max'=>255),
+			array('episode_id', 'numerical', 'integerOnly'=>true),
+			array('actor_name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, season_name, season_number, season_series_number, season_description', 'safe', 'on'=>'search'),
+			array('id, actor_name, episode_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +45,7 @@ class Seasons extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'episodes' => array(self::HAS_MANY, 'Episode', 'season_id'),
-			'seasonSeriesNumber' => array(self::BELONGS_TO, 'Series', 'season_series_number'),
+			'episode' => array(self::BELONGS_TO, 'Episode', 'episode_id'),
 		);
 	}
 
@@ -61,10 +56,8 @@ class Seasons extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'season_name' => 'Season Name',
-			'season_number' => 'Season Number',
-			'season_series_number' => 'Season Series Number',
-			'season_description' => 'Season Description',
+			'actor_name' => 'Actor Name',
+			'episode_id' => 'Episode',
 		);
 	}
 
@@ -87,10 +80,8 @@ class Seasons extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('season_name',$this->season_name,true);
-		$criteria->compare('season_number',$this->season_number);
-		$criteria->compare('season_series_number',$this->season_series_number);
-		$criteria->compare('season_description',$this->season_description,true);
+		$criteria->compare('actor_name',$this->actor_name,true);
+		$criteria->compare('episode_id',$this->episode_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -101,18 +92,10 @@ class Seasons extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Seasons the static model class
+	 * @return Actors the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function getSeasonsBySeries($seriesId)
-	{
-		$criteria = new CDbCriteria();
-		$criteria->compare('season_series_number', '='. $seriesId);
-		$seasons = Seasons::model()->findAll($criteria);
-		return $seasons;
 	}
 }

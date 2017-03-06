@@ -28,9 +28,9 @@ foreach ($model as $data){
 ?>
     <div class="view grid-thumbnails">
 
-        <b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-        <?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-        <br />
+<!--        <b>--><?php //echo CHtml::encode($data->getAttributeLabel('id')); ?><!--:</b>-->
+<!--        --><?php //echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+<!--        <br />-->
 
         <b><?php echo CHtml::encode($data->getAttributeLabel('season_name')); ?>:</b>
         <?php echo CHtml::encode($data->season_name); ?>

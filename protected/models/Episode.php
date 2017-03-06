@@ -14,6 +14,7 @@
  * @property integer $season_id
  *
  * The followings are the available model relations:
+ * @property TblActors[] $tblActors
  * @property TblSeasons $season
  */
 class Episode extends CActiveRecord
@@ -51,7 +52,8 @@ class Episode extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'season' => array(self::BELONGS_TO, 'TblSeasons', 'season_id'),
+			'actors' => array(self::HAS_MANY, 'Actors', 'episode_id'),
+			'season' => array(self::BELONGS_TO, 'Seasons', 'season_id'),
 		);
 	}
 
@@ -115,12 +117,31 @@ class Episode extends CActiveRecord
 		return parent::model($className);
 	}
 
+	public function getEpisodesBySeasons($seasonId)
+	{
+		// Fetch actors
+//		$episode=Episode::model()->with('actors')->findAll();
 
-    public function getEpisodesBySeasons($seasonId)
-    {
-        $criteria = new CDbCriteria();
-        $criteria->compare('season_id', '='. $seasonId);
-        $episode = Episode::model()->findAll($criteria);
-        return $episode;
-    }
+//		$episode = Episode::model()->findByPk($seasonId);
+//		$b = $episode->actors;
+
+//		print_r($episode);exit;
+		$criteria = new CDbCriteria();
+		$criteria->compare('season_id', '='. $seasonId);
+		$episode = Episode::model()->findAll($criteria);
+		return $episode;
+	}
+
+
+	public function getEpisodeDetail($episodeId){
+		// Find Episode by ID
+		$episode = Episode::model()->findByPk($episodeId);//print_r($episode);exit;
+		// Fetch related actors. Relational query will be executed automatically
+//		$actors = $episode->actors;
+//		$arr['episode'] = $episode;
+//		$arr['actors'] = $actors;
+
+		return $episode;
+	}
+
 }

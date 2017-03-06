@@ -33,7 +33,7 @@ class ApiController extends Controller
         // Get the respective model instance
         switch($_GET['model'])
         {
-            case 'series' || 'seasons' || 'episode':
+            case 'series' || 'seasons' || 'episode' || 'actors':
                 $models = $_GET['model']::model()->findAll();
                 break;
             default:
@@ -66,7 +66,7 @@ class ApiController extends Controller
         switch($_GET['model'])
         {
             // Find respective model
-            case  'series' || 'seasons' || 'episode':
+            case  'series' || 'seasons' || 'episode' || 'actors':
                 $model = $_GET['model']::model()->findByPk($_GET['id']);
                 break;
             default:
@@ -94,6 +94,9 @@ class ApiController extends Controller
                 break;
             case 'episode':
                 $model = new Episode;
+                break;
+            case 'actors':
+                $model = new Actors;
                 break;
             default:
                 $this->_sendResponse(501,

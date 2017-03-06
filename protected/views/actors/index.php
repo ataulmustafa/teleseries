@@ -1,18 +1,18 @@
 <?php
-/* @var $this SeriesController */
+/* @var $this ActorsController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Series',
+	'Actors',
 );
 
 $this->menu=array(
-	array('label'=>'Create Series', 'url'=>array('create')),
-	array('label'=>'Manage Series', 'url'=>array('admin')),
+	array('label'=>'Create Actors', 'url'=>array('create')),
+	array('label'=>'Manage Actors', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Series</h1>
+<h1>Actors</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
