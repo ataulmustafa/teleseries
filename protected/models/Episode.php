@@ -132,6 +132,37 @@ class Episode extends CActiveRecord
 		return $episode;
 	}
 
+	public function getEpisodesBySeasonsCurl($seasonId)
+	{
+		$criteria = new CDbCriteria();
+		$criteria->compare('season_id', '='. $seasonId);
+		$episode = Episode::model()->findAll($criteria);
+		// For curl
+		$ar = array();
+		foreach ($episode as $data){
+			$ar[] = array(
+				'id' => $data->id,
+				'episode_name' => $data->episode_name,
+				'thumbnail' => $data->thumbnail,
+				'poster' => $data->poster,
+				'actor' => $data->actor,
+				'director' => $data->director,
+				'description' => $data->description,
+			);
+		}//print_r($ar);exit;
+		// headers for not caching the results
+		header('Cache-Control: no-cache, must-revalidate');
+//		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+
+		// headers to tell that result is JSON
+		header('Content-type: application/json');
+		$statusHeader = 'HTTP/1.1 200 OK';
+		header($statusHeader);
+		$seasons = json_encode($ar, true);
+		echo $seasons;
+		Yii::app()->end();
+	}
+
 
 	public function getEpisodeDetail($episodeId){
 		// Find Episode by ID

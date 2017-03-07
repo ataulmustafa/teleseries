@@ -546,14 +546,32 @@ p.hint { float:left; display:block;}
 
 .col-md-3 { float: left; }
 
+
+/*Custom Styling*/
+
 .grid-thumbnails{
   display: inline-block;
   border: 1px solid lightgray;
   padding: 15px;
   border-radius: 3px;
   max-width: 275px;
+  vertical-align: top;
 }
 
 .span3 .portlet .content{
   display: inline-block;
+}
+
+.episode_detail .inline-block{
+   display: inline-block;
+   vertical-align: top;
+}
+
+
+.episode_detail .right_col{
+  margin-left: 20px;
+  width: 72%;
+}
+.episode_detail .left_col{
+  width: 20%;
 }

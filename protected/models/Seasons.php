@@ -113,6 +113,50 @@ class Seasons extends CActiveRecord
 		$criteria = new CDbCriteria();
 		$criteria->compare('season_series_number', '='. $seriesId);
 		$seasons = Seasons::model()->findAll($criteria);
+/*
+		$ar = array();
+		foreach ($seasons as $data){
+			$ar[] = array(
+				'season_name' => $data->season_name,
+				'season_number' => $data->season_number,
+				'season_series_number' => $data->season_series_number,
+				'season_description' => $data->season_description,
+			);
+		}
+		$seasons = json_encode($ar, true);
+
+		print_r($seasons);exit;
+*/
 		return $seasons;
+	}
+
+
+	public function getSeasonsBySeriesCurl($seriesId)
+	{
+		$criteria = new CDbCriteria();
+		$criteria->compare('season_series_number', '='. $seriesId);
+		$seasons = Seasons::model()->findAll($criteria);
+		// For curl
+		$ar = array();
+		foreach ($seasons as $data){
+			$ar[] = array(
+				'id' => $data->id,
+				'season_name' => $data->season_name,
+				'season_number' => $data->season_number,
+				'season_series_number' => $data->season_series_number,
+				'season_description' => $data->season_description,
+			);
+		}
+		// headers for not caching the results
+		header('Cache-Control: no-cache, must-revalidate');
+//		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+
+		// headers to tell that result is JSON
+		header('Content-type: application/json');
+		$statusHeader = 'HTTP/1.1 200 OK';
+		header($statusHeader);
+		$seasons = json_encode($ar, true);
+		echo $seasons;
+		Yii::app()->end();
 	}
 }

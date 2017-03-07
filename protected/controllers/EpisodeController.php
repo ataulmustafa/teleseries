@@ -16,7 +16,16 @@ class EpisodeController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
+			'checkSeasonId',
 		);
+	}
+
+	function filtercheckSeasonId($filterChain){
+		if(empty(Yii::app()->getRequest()->getParam('id')) && Yii::app()->controller->action->id !== 'index'){
+			throw new CHttpException(404,'The requested Episodes not found.');
+		}else{
+			$filterChain->run();
+		}
 	}
 
 	/**
@@ -28,7 +37,7 @@ class EpisodeController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','byseasons','details'),
+				'actions'=>array('index','view','byseasons','details','seasons'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -172,10 +181,38 @@ class EpisodeController extends Controller
 	}
 
     public function actionBySeasons($id){
+		// Consume REST API
+		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/episode/seasons/$id";
+		//  Initiate curl
+		$ch = curl_init();
+		// Disable SSL verification
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		// Will return the response, if false it print the response
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		// Set the url
+		curl_setopt($ch, CURLOPT_URL,$url);
+		// Execute
+		$result=curl_exec($ch);
+		// Closing
+		curl_close($ch);
+
+		// Will dump json
+//		var_dump(json_decode($result, true));
+		$model = json_decode($result, true);
+		$this->render('byseasons',array('model'=>$model));
+
+
+		/*
         // Find Seasons of selected series
         $model = Episode::model()->getEpisodesBySeasons($id);
         $this->render('byseasons',array('model'=>$model));
+		*/
     }
+
+	public function actionSeasons($id){
+		// Find Episodes of selected seasons
+		$model = Episode::model()->getEpisodesBySeasonsCurl($id);
+	}
 
 
 	public function actionDetails($id){

@@ -140,7 +140,7 @@ class ApiController extends Controller
     {
     }
 
-    private function _sendResponse($status = 200, $body = '', $content_type = 'text/html')
+    private function _sendResponse($status = 200, $body = '', $content_type = 'application/json')
     {
         // set the status
         $status_header = 'HTTP/1.1 ' . $status . ' ' . $this->_getStatusCodeMessage($status);

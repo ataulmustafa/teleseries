@@ -23,45 +23,19 @@ $this->menu=array(
 );
 
 
-
-foreach ($model as $data){
+//print_r($model);exit;
+for ($i=0; $i<count($model);$i++){
 ?>
     <div class="view grid-thumbnails">
 
-<!--        <b>--><?php //echo CHtml::encode($data->getAttributeLabel('id')); ?><!--:</b>-->
-<!--        --><?php //echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-<!--        <br />-->
-
-<!--        <b>--><?php //echo CHtml::encode($data->getAttributeLabel('poster')); ?><!--:</b>-->
-        <?php echo CHtml::image(dirname(Yii::app()->request->baseUrl).DIRECTORY_SEPARATOR.'teleseries/' . $data->poster, 'POSTER IMAGE'); ?>
+        <?php echo CHtml::image(dirname(Yii::app()->request->baseUrl).DIRECTORY_SEPARATOR.'teleseries/' . $model[$i]['poster'], 'POSTER IMAGE'); ?>
         <br />
 
-        <b><?php echo CHtml::encode($data->getAttributeLabel('episode_name')); ?>:</b>
-        <?php echo CHtml::encode($data->episode_name); ?>
+        <b>Episode Name:</b>
+        <?php echo CHtml::encode($model[$i]['episode_name']); ?>
         <br />
 
-<!--        <b>--><?php //echo CHtml::encode($data->getAttributeLabel('thumbnail')); ?><!--:</b>-->
-<!--        --><?php //echo CHtml::encode($data->thumbnail); ?>
-<!--        <br />-->
-
-
-
-<!--        <b>--><?php //echo CHtml::encode($data->getAttributeLabel('actor')); ?><!--:</b>-->
-<!--        --><?php //for($i=0;$i<count($data->actors);$i++){
-//            if($i) echo ', ';
-//            echo CHtml::encode($data->actors[$i]->attributes['actor_name']);
-//        } ?>
-<!--        <br />-->
-<!---->
-<!--        <b>--><?php //echo CHtml::encode($data->getAttributeLabel('director')); ?><!--:</b>-->
-<!--        --><?php //echo CHtml::encode($data->director); ?>
-<!--        <br />-->
-<!---->
-<!--        <b>--><?php //echo CHtml::encode($data->getAttributeLabel('description')); ?><!--:</b>-->
-<!--        --><?php //echo CHtml::encode($data->description); ?>
-<!--        <br />-->
-
-        <b><?php echo CHtml::link('View Detail',$this->createAbsoluteUrl('episode/details/'.$data->id)); ?></b>
+        <b><?php echo CHtml::link('View Detail',$this->createAbsoluteUrl('episode/details/'.$model[$i]['id'])); ?></b>
     </div>
 <?php
 }

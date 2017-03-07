@@ -15,49 +15,41 @@ $this->menu=array(
 );
 ?>
 <h1>Episode Details</h1>
-<div class="view">
+<div class="view episode_detail">
 
-
-<!--	<b>--><?php //echo CHtml::encode($data->getAttributeLabel('poster')); ?><!--:</b>-->
+<div style="display: block;margin-bottom: 20px;">
 	<?php echo CHtml::image(dirname(Yii::app()->request->baseUrl).DIRECTORY_SEPARATOR.'teleseries/images/poster_large.png', 'POSTER IMAGE'); ?>
-	<br />
-	<br />
-	<br />
+</div>
 
 
-<!--	<b>--><?php //echo CHtml::encode($data->getAttributeLabel('thumbnail')); ?><!--:</b>-->
+	<div class="inline-block">
 	<?php echo CHtml::image(dirname(Yii::app()->request->baseUrl).DIRECTORY_SEPARATOR.'teleseries/' . $data->thumbnail, 'THUMBNAIL IMAGE'); ?>
-	<br />
-	<br />
+	</div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('episode_name')); ?>:</b>
-	<?php echo CHtml::encode($data->episode_name); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('actor')); ?>:</b>
-	<?php for($i=0;$i<count($data->actors);$i++){
-	            if($i) echo ', ';
-	            echo CHtml::encode($data->actors[$i]->attributes['actor_name']);
-	        }  ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('director')); ?>:</b>
-	<?php echo CHtml::encode($data->director); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-	<?php echo CHtml::encode($data->description); ?>
-	<br />
-
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('season_id')); ?>:</b>
-	<?php echo CHtml::encode($data->season_id); ?>
-	<br />
-
-	*/ ?>
+	<div class="inline-block right_col">
+		<div>
+			<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
+			<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+		</div>
+		<div>
+			<b><?php echo CHtml::encode($data->getAttributeLabel('episode_name')); ?>:</b>
+			<?php echo CHtml::encode($data->episode_name); ?>
+		</div>
+		<div>
+			<b><?php echo CHtml::encode($data->getAttributeLabel('actor')); ?>:</b>
+			<?php for($i=0;$i<count($data->actors);$i++){
+						if($i) echo ', ';
+						echo CHtml::encode($data->actors[$i]->attributes['actor_name']);
+					}  ?>
+		</div>
+		<div>
+			<b><?php echo CHtml::encode($data->getAttributeLabel('director')); ?>:</b>
+			<?php echo CHtml::encode($data->director); ?>
+		</div>
+		<div>
+			<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
+			<?php echo CHtml::encode($data->description); ?>
+		</div>
+	</div>
 
 </div>

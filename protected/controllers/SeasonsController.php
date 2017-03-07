@@ -16,7 +16,16 @@ class SeasonsController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
+			'checkSeriesId',
 		);
+	}
+
+	function filtercheckSeriesId($filterChain){//echo Yii::app()->controller->action->id;exit;
+		if(empty(Yii::app()->getRequest()->getParam('id')) && Yii::app()->controller->action->id !== 'index'){
+			throw new CHttpException(404,'The requested seasons not found.');
+		}else{
+			$filterChain->run();
+		}
 	}
 
 	/**
@@ -28,7 +37,7 @@ class SeasonsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','byseries'),
+				'actions'=>array('index','view','byseries','series'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -172,8 +181,8 @@ class SeasonsController extends Controller
 	}
 
 	public function actionBySeries($id){
-
-		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/api/seasons/$id";
+		// Consume REST API
+		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/seasons/series/$id";
 		//  Initiate curl
 		$ch = curl_init();
 		// Disable SSL verification
@@ -187,13 +196,31 @@ class SeasonsController extends Controller
 		// Closing
 		curl_close($ch);
 
-		// Will dump a beauty json :3
+		// Will dump json
 //		var_dump(json_decode($result, true));
+		$model = json_decode($result, true);
+
+		$this->render('byseriescurl',array('model'=>$model));
 
 
+		/*
 	    // Find Seasons of selected series
 		$model = Seasons::model()->getSeasonsBySeries($id);
-//		$model = json_decode($result, true);
         $this->render('byseries',array('model'=>$model));
+		*/
+	}
+
+
+	public function actionSeries($id){
+		// Find Seasons of selected series
+		$model = Seasons::model()->getSeasonsBySeriesCurl($id);
+	}
+
+	public function actionError(){
+		$error = Yii::app()->errorHandler->error;
+		if ($error)
+			$this->render('error', array('error'=>$error));
+		else
+			throw new CHttpException(404, 'Page not found.');
 	}
 }
