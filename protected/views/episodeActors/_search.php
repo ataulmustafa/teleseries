@@ -1,6 +1,6 @@
 <?php
-/* @var $this ActorsController */
-/* @var $model Actors */
+/* @var $this EpisodeActorsController */
+/* @var $model EpisodeActors */
 /* @var $form CActiveForm */
 ?>
 
@@ -17,8 +17,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'actor_name'); ?>
-		<?php echo $form->textField($model,'actor_name',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->label($model,'episode_id'); ?>
+		<?php echo $form->textField($model,'episode_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'actor_id'); ?>
+		<?php echo $form->textField($model,'actor_id'); ?>
 	</div>
 
 	<div class="row buttons">

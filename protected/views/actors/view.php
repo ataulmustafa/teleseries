@@ -23,6 +23,5 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'actor_name',
-		'episode_id',
 	),
 )); ?>

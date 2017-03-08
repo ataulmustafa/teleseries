@@ -8,14 +8,13 @@
  * @property string $episode_name
  * @property string $thumbnail
  * @property string $poster
- * @property string $actor
  * @property string $director
  * @property string $description
  * @property integer $season_id
  *
  * The followings are the available model relations:
- * @property TblActors[] $tblActors
  * @property TblSeasons $season
+ * @property TblEpisodeActors[] $tblEpisodeActors
  */
 class Episode extends CActiveRecord
 {
@@ -37,10 +36,10 @@ class Episode extends CActiveRecord
 		return array(
 			array('episode_name', 'required'),
 			array('season_id', 'numerical', 'integerOnly'=>true),
-			array('episode_name, thumbnail, poster, actor, director, description', 'length', 'max'=>255),
+			array('episode_name, thumbnail, poster, director, description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, episode_name, thumbnail, poster, actor, director, description, season_id', 'safe', 'on'=>'search'),
+			array('id, episode_name, thumbnail, poster, director, description, season_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,8 +51,8 @@ class Episode extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'actors' => array(self::HAS_MANY, 'Actors', 'episode_id'),
-			'season' => array(self::BELONGS_TO, 'Seasons', 'season_id'),
+			'season' => array(self::BELONGS_TO,'Seasons', 'season_id'),
+			'EpisodeActors' => array(self::HAS_MANY, 'EpisodeActors', 'episode_id'),
 		);
 	}
 
@@ -67,7 +66,6 @@ class Episode extends CActiveRecord
 			'episode_name' => 'Episode Name',
 			'thumbnail' => 'Thumbnail',
 			'poster' => 'Poster',
-			'actor' => 'Actor',
 			'director' => 'Director',
 			'description' => 'Description',
 			'season_id' => 'Season',
@@ -96,7 +94,6 @@ class Episode extends CActiveRecord
 		$criteria->compare('episode_name',$this->episode_name,true);
 		$criteria->compare('thumbnail',$this->thumbnail,true);
 		$criteria->compare('poster',$this->poster,true);
-		$criteria->compare('actor',$this->actor,true);
 		$criteria->compare('director',$this->director,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('season_id',$this->season_id);
@@ -145,7 +142,7 @@ class Episode extends CActiveRecord
 				'episode_name' => $data->episode_name,
 				'thumbnail' => $data->thumbnail,
 				'poster' => $data->poster,
-				'actor' => $data->actor,
+//				'actor' => $data->actor,
 				'director' => $data->director,
 				'description' => $data->description,
 			);

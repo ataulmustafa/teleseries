@@ -13,9 +13,5 @@
 	<?php echo CHtml::encode($data->actor_name); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('episode_id')); ?>:</b>
-	<?php echo CHtml::encode($data->episode_id); ?>
-	<br />
-
 
 </div>
