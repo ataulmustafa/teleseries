@@ -53,6 +53,7 @@ class Episode extends CActiveRecord
 		return array(
 			'season' => array(self::BELONGS_TO,'Seasons', 'season_id'),
 			'EpisodeActors' => array(self::HAS_MANY, 'EpisodeActors', 'episode_id'),
+			'actors' => array(self::MANY_MANY, 'Actors', 'tbl_episode_actors(episode_id, actor_id)'),
 		);
 	}
 
@@ -162,13 +163,10 @@ class Episode extends CActiveRecord
 
 
 	public function getEpisodeDetail($episodeId){
-		// Find Episode by ID
-		$episode = Episode::model()->findByPk($episodeId);//print_r($episode);exit;
-		// Fetch related actors. Relational query will be executed automatically
-//		$actors = $episode->actors;
-//		$arr['episode'] = $episode;
-//		$arr['actors'] = $actors;
-
+		// Many to Many Relationship: Fetch data from Episode, EpisodeActors(link table), Actors
+		$episode=Episode::model()->with('EpisodeActors','actors')->find(array(
+			'condition'=>"EpisodeActors.episode_id=$episodeId AND EpisodeActors.actor_id=actors.id"
+		));
 		return $episode;
 	}
 

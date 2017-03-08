@@ -23,7 +23,7 @@ $this->menu=array(
 
 
 	<div class="inline-block">
-	<?php echo CHtml::image(dirname(Yii::app()->request->baseUrl).DIRECTORY_SEPARATOR.'teleseries/' . $data->thumbnail, 'THUMBNAIL IMAGE'); ?>
+	<?php echo CHtml::image(dirname(Yii::app()->request->baseUrl).DIRECTORY_SEPARATOR.'teleseries/' . CHtml::encode($data->thumbnail), 'THUMBNAIL IMAGE'); ?>
 	</div>
 
 	<div class="inline-block right_col">
@@ -37,10 +37,14 @@ $this->menu=array(
 		</div>
 		<div>
 			<b><?php echo CHtml::encode($data->getAttributeLabel('actor')); ?>:</b>
-			<?php for($i=0;$i<count($data->actors);$i++){
-						if($i) echo ', ';
+			<?php
+				if(count($data->actors)) {
+					for ($i = 0; $i < count($data->actors); $i++) {
+						if ($i) echo ', ';
 						echo CHtml::encode($data->actors[$i]->attributes['actor_name']);
-					}  ?>
+					}
+				}
+			?>
 		</div>
 		<div>
 			<b><?php echo CHtml::encode($data->getAttributeLabel('director')); ?>:</b>
