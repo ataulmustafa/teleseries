@@ -57,6 +57,11 @@ return array(
 				array('api/create', 'pattern'=>'api/<model:\w+>', 'verb'=>'POST'),
 				// Other controllers
 
+				// View all seasons of specific series
+				array('seasons/series', 'pattern'=>'series/<id:\d+>/<model:\w+>', 'verb'=>'GET'),
+				// View all episodes of specific season
+				array('episode/seasons', 'pattern'=>'season/<id:\d+>/<model:\w+>', 'verb'=>'GET'),
+
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',

@@ -182,7 +182,7 @@ class SeasonsController extends Controller
 
 	public function actionBySeries($id){
 		// Consume REST API
-		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/seasons/series/$id";
+		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/series/$id/seasons";
 		//  Initiate curl
 		$ch = curl_init();
 		// Disable SSL verification
@@ -212,8 +212,12 @@ class SeasonsController extends Controller
 
 
 	public function actionSeries($id){
-		// Find Seasons of selected series
-		$model = Seasons::model()->getSeasonsBySeriesCurl($id);
+		if($_GET['model'] == 'seasons') {
+			// Find Seasons of selected series
+			Seasons::model()->getSeasonsBySeriesCurl($id);
+		}else{
+			throw new CHttpException(404,'The requested model not found.');
+		}
 	}
 
 	public function actionError(){
