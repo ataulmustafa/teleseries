@@ -77,13 +77,14 @@ class ApiController extends Controller
         }
         // Did we find the requested model? If not, raise an error
         if(is_null($model))
-            $this->_sendResponse(404, 'No Item found with id '.$_GET['id']);
+            $this->_sendResponse(404, 'Invalid '.$_GET['model'].' id '.$_GET['id']);
         else
             $this->_sendResponse(200, CJSON::encode($model));
     }
     public function actionCreate()
     {
-        switch($_GET['model'])
+        $mod = $_GET['model'];
+        switch($mod)
         {
             // Get an instance of the respective model
             case 'series':
@@ -104,6 +105,16 @@ class ApiController extends Controller
                         $_GET['model']) );
                 Yii::app()->end();
         }
+        if($mod == 'seasons'){
+            $seas = Series::model()->findByPk($_POST['season_series_number']);
+            if(is_null($seas))
+                $this->_sendResponse(500, 'Invalid id entered for this column season_series_number.' );
+        }else if($mod == 'episode'){
+            $ep = Seasons::model()->findByPk($_POST['season_id']);
+            if(is_null($ep))
+                $this->_sendResponse(500, 'Invalid id entered for this column season_id.' );
+        }
+
         // Try to assign POST values to attributes
         foreach($_POST as $var=>$value) {
             // Does the model have this attribute? If not raise an error
@@ -151,8 +162,13 @@ class ApiController extends Controller
         // pages with body are easy
         if($body != '')
         {
-            // send the body
-            echo $body;
+            if($content_type == 'application/json'){
+                echo json_encode(array('status'=>'error','msg'=>$body));
+            }else{
+                // send the body
+                echo $body;
+            }
+
         }
         // we need to create the body if none is passed
         else

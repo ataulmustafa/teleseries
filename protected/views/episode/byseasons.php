@@ -23,7 +23,9 @@ $this->menu=array(
 );
 
 
-//print_r($model);exit;
+if(count($model) == 0){
+    echo '<p>No episode found for this season.</p>';
+}
 for ($i=0; $i<count($model);$i++){
 ?>
     <div class="view grid-thumbnails">

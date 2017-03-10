@@ -21,7 +21,9 @@ $this->menu=array(
 //    array('label'=>'Delete Seasons', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
     array('label'=>'Manage Seasons', 'url'=>array('admin')),
 );
-
+if(count($model) == 0){
+    echo '<p>No season found for this series.</p>';
+}
 for($i=0; $i<count($model);$i++){
 ?>
     <div class="view grid-thumbnails">

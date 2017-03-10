@@ -196,10 +196,12 @@ class EpisodeController extends Controller
 		// Closing
 		curl_close($ch);
 
-		// Will dump json
-//		var_dump(json_decode($result, true));
 		$model = json_decode($result, true);
-		$this->render('byseasons',array('model'=>$model));
+		if($model['status'] == 'error'){
+			throw new CHttpException(404,$model['msg']);
+		}else {
+			$this->render('byseasons', array('model' => $model['data']));
+		}
 
 
 		/*

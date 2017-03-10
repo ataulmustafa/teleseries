@@ -20,7 +20,7 @@ class SeasonsController extends Controller
 		);
 	}
 
-	function filtercheckSeriesId($filterChain){//echo Yii::app()->controller->action->id;exit;
+	function filtercheckSeriesId($filterChain){
 		if(empty(Yii::app()->getRequest()->getParam('id')) && Yii::app()->controller->action->id !== 'index'){
 			throw new CHttpException(404,'The requested seasons not found.');
 		}else{
@@ -196,11 +196,12 @@ class SeasonsController extends Controller
 		// Closing
 		curl_close($ch);
 
-		// Will dump json
-//		var_dump(json_decode($result, true));
-		$model = json_decode($result, true);
-
-		$this->render('byseriescurl',array('model'=>$model));
+		$model = json_decode($result, true);//print_r($model);exit;
+		if($model['status'] == 'error'){
+			throw new CHttpException(404,$model['msg']);
+		}else {
+			$this->render('byseriescurl', array('model' => $model['data']));
+		}
 
 
 		/*

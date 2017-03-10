@@ -132,22 +132,35 @@ class Episode extends CActiveRecord
 
 	public function getEpisodesBySeasonsCurl($seasonId)
 	{
-		$criteria = new CDbCriteria();
-		$criteria->compare('season_id', '='. $seasonId);
-		$episode = Episode::model()->findAll($criteria);
-		// For curl
+		$seasonsIdDb = Seasons::model()->findByPk($seasonId);
 		$ar = array();
-		foreach ($episode as $data){
-			$ar[] = array(
-				'id' => $data->id,
-				'episode_name' => $data->episode_name,
-				'thumbnail' => $data->thumbnail,
-				'poster' => $data->poster,
-//				'actor' => $data->actor,
-				'director' => $data->director,
-				'description' => $data->description,
-			);
-		}//print_r($ar);exit;
+		if (!$seasonsIdDb) {
+			$ar['status'] = 'error';
+			$ar['msg'] = 'Invalid Request: Season doesn\'t exist';
+			$ar['data'] = array();
+		} else {
+			$criteria = new CDbCriteria();
+			$criteria->compare('season_id', '='. $seasonId);
+			$episode = Episode::model()->findAll($criteria);
+
+			$ar['status'] = 'success';
+			$ar['msg'] = 'Success';
+			$ar['data'] = array();
+			foreach ($episode as $data) {
+				$ar['data'][] = array(
+					'id' => $data->id,
+					'episode_name' => $data->episode_name,
+					'thumbnail' => $data->thumbnail,
+					'poster' => $data->poster,
+					'director' => $data->director,
+					'description' => $data->description,
+				);
+			}
+		}
+
+
+
+		// For curl
 		// headers for not caching the results
 		header('Cache-Control: no-cache, must-revalidate');
 //		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');

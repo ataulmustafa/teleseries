@@ -133,19 +133,29 @@ class Seasons extends CActiveRecord
 
 	public function getSeasonsBySeriesCurl($seriesId)
 	{
-		$criteria = new CDbCriteria();
-		$criteria->compare('season_series_number', '='. $seriesId);
-		$seasons = Seasons::model()->findAll($criteria);
-		// For curl
+		$seriesIdDb = Series::model()->findByPk($seriesId);
 		$ar = array();
-		foreach ($seasons as $data){
-			$ar[] = array(
-				'id' => $data->id,
-				'season_name' => $data->season_name,
-				'season_number' => $data->season_number,
-				'season_series_number' => $data->season_series_number,
-				'season_description' => $data->season_description,
-			);
+		if (!$seriesIdDb) {
+			$ar['status'] = 'error';
+			$ar['msg'] = 'Invalid Request: Series doesn\'t exist';
+			$ar['data'] = array();
+		} else {
+			$criteria = new CDbCriteria();
+			$criteria->compare('season_series_number', '=' . $seriesId);
+			$seasons = Seasons::model()->findAll($criteria);
+
+			$ar['status'] = 'success';
+			$ar['msg'] = 'Success';
+			$ar['data'] = array();
+			foreach ($seasons as $data) {
+				$ar['data'][] = array(
+					'id' => $data->id,
+					'season_name' => $data->season_name,
+					'season_number' => $data->season_number,
+					'season_series_number' => $data->season_series_number,
+					'season_description' => $data->season_description,
+				);
+			}
 		}
 		// headers for not caching the results
 		header('Cache-Control: no-cache, must-revalidate');
