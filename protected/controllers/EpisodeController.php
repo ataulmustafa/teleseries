@@ -16,13 +16,13 @@ class EpisodeController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
-			'checkSeasonId',
+			'checkEpisodeId',
 		);
 	}
 
-	function filtercheckSeasonId($filterChain){
+	function filtercheckEpisodeId($filterChain){
 		if(empty(Yii::app()->getRequest()->getParam('id')) && Yii::app()->controller->action->id !== 'index'){
-			throw new CHttpException(404,'The requested Episodes not found.');
+			throw new CHttpException(404,'The requested Episode not found.');
 		}else{
 			$filterChain->run();
 		}
@@ -225,9 +225,13 @@ class EpisodeController extends Controller
 
 
 	public function actionDetails($id){
-		// Find Seasons of selected series
-		$model = Episode::model()->getEpisodeDetail($id);
 
-		$this->render('details',array('data'=>$model));
+		$episodeId = Episode::model()->findByPk($id);
+		if (!$episodeId) {
+			throw new CHttpException(404,'The requested Episode not found.');
+		}else{
+			$model = Episode::model()->getEpisodeDetail($id);
+			$this->render('details',array('data'=>$model));
+		}
 	}
 }

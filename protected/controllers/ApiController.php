@@ -77,9 +77,11 @@ class ApiController extends Controller
         }
         // Did we find the requested model? If not, raise an error
         if(is_null($model))
-            $this->_sendResponse(404, 'Invalid '.$_GET['model'].' id '.$_GET['id']);
+//            $this->_sendResponse(404, 'Invalid '.$_GET['model'].' id '.$_GET['id']);
+            $this->_sendResponse(404, CJSON::encode(array('status'=>'error','data'=>'Invalid '.$_GET['model'].' id '.$_GET['id'])));
         else
-            $this->_sendResponse(200, CJSON::encode($model));
+//            $this->_sendResponse(200, CJSON::encode($model));
+        $this->_sendResponse(200, CJSON::encode(array('status'=>'success','data'=>$model)));
     }
     public function actionCreate()
     {
@@ -162,12 +164,8 @@ class ApiController extends Controller
         // pages with body are easy
         if($body != '')
         {
-            if($content_type == 'application/json'){
-                echo json_encode(array('status'=>'error','msg'=>$body));
-            }else{
-                // send the body
-                echo $body;
-            }
+            // send the body
+            echo $body;
 
         }
         // we need to create the body if none is passed
