@@ -131,7 +131,7 @@ class Seasons extends CActiveRecord
 	}
 
 
-	public function getSeasonsBySeriesCurl($seriesId)
+	public function getSeasonsBySeriesCurl($seriesId,$offset=0,$limit=10)
 	{
 		$seriesIdDb = Series::model()->findByPk($seriesId);
 		$ar = array();
@@ -142,6 +142,8 @@ class Seasons extends CActiveRecord
 		} else {
 			$criteria = new CDbCriteria();
 			$criteria->compare('season_series_number', '=' . $seriesId);
+			$criteria->offset = $offset;
+			$criteria->limit = $limit;
 			$seasons = Seasons::model()->findAll($criteria);
 
 			$ar['status'] = 'success';

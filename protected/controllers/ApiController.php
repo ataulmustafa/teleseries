@@ -30,11 +30,15 @@ class ApiController extends Controller
     // Actions
     public function actionList()
     {
+        $offset = (!array_key_exists('offset',$_GET)) ? 0 : $_GET['offset'];
+        $limit = (!array_key_exists('limit',$_GET)) ? 0 : $_GET['limit'];
+        $offset = ($offset<0 || empty($offset)) ? 0 : $offset;
+        $limit = ($limit<0 || empty($limit)) ? 10 : $limit;
         // Get the respective model instance
         switch($_GET['model'])
         {
             case 'series' || 'seasons' || 'episode' || 'actors':
-                $models = $_GET['model']::model()->findAll();
+                $models = $_GET['model']::model()->findAll(array('offset' => $offset,'limit' => $limit));
                 break;
             default:
                 // Model not implemented error
@@ -47,7 +51,7 @@ class ApiController extends Controller
         if(empty($models)) {
             // No
             $this->_sendResponse(200,
-                sprintf('No items where found for model <b>%s</b>', $_GET['model']) );
+                sprintf('No items were found for model <b>%s</b>', $_GET['model']) );
         } else {
             // Prepare response
             $rows = array();

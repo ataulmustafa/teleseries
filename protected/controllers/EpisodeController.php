@@ -180,9 +180,9 @@ class EpisodeController extends Controller
 		}
 	}
 
-    public function actionBySeasons($id){
+    public function actionBySeasons($id, $offset=0, $limit=0){
 		// Consume REST API
-		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/season/$id/episodes";
+		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/season/$id/episodes?offset=$offset&limt=$limit";
 		//  Initiate curl
 		$ch = curl_init();
 		// Disable SSL verification
@@ -211,13 +211,15 @@ class EpisodeController extends Controller
 		*/
     }
 
-	public function actionSeasons($id){
+	public function actionSeasons($id,$offset,$limit){
 		// Find Episodes of selected seasons
 //		$model = Episode::model()->getEpisodesBySeasonsCurl($id);
 
+		$offset = ($offset<0 || empty($offset)) ? 0 : $offset;
+		$limit = ($limit<0 || empty($limit)) ? 10 : $limit;
 		if($_GET['model'] == 'episodes') {
 			// Find Episodes of selected seasons
-			Episode::model()->getEpisodesBySeasonsCurl($id);
+			Episode::model()->getEpisodesBySeasonsCurl($id,$offset,$limit);
 		}else{
 			throw new CHttpException(404,'Invalid Season requested.');
 		}
@@ -225,7 +227,6 @@ class EpisodeController extends Controller
 
 
 	public function actionDetails($id){
-
 		$episodeId = Episode::model()->findByPk($id);
 		if (!$episodeId) {
 			throw new CHttpException(404,'The requested Episode not found.');

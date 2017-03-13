@@ -180,9 +180,9 @@ class SeasonsController extends Controller
 		}
 	}
 
-	public function actionBySeries($id){
+	public function actionBySeries($id, $offset=0, $limit=0){
 		// Consume REST API
-		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/series/$id/seasons";
+		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/series/$id/seasons?offset=$offset&limt=$limit";
 		//  Initiate curl
 		$ch = curl_init();
 		// Disable SSL verification
@@ -212,10 +212,12 @@ class SeasonsController extends Controller
 	}
 
 
-	public function actionSeries($id){
+	public function actionSeries($id, $offset=0, $limit=0){
+		$offset = ($offset<0 || empty($offset)) ? 0 : $offset;
+		$limit = ($limit<0 || empty($limit)) ? 10 : $limit;
 		if($_GET['model'] == 'seasons') {
 			// Find Seasons of selected series
-			Seasons::model()->getSeasonsBySeriesCurl($id);
+			Seasons::model()->getSeasonsBySeriesCurl($id,$offset,$limit);
 		}else{
 			throw new CHttpException(404,'The requested model not found.');
 		}
