@@ -182,7 +182,7 @@ class EpisodeController extends Controller
 
     public function actionBySeasons($id, $offset=0, $limit=0){
 		// Consume REST API
-		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/season/$id/episodes?offset=$offset&limt=$limit";
+		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/season/$id/episodes?offset=$offset&limit=$limit";
 		//  Initiate curl
 		$ch = curl_init();
 		// Disable SSL verification
