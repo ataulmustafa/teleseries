@@ -176,13 +176,27 @@ class Episode extends CActiveRecord
 		Yii::app()->end();
 	}
 
-
 	public function getEpisodeDetail($episodeId){
 		// Many to Many Relationship: Fetch data from Episode, EpisodeActors(link table), Actors
 		$episode=Episode::model()->with('EpisodeActors','actors')->find(array(
 			'condition'=>"EpisodeActors.episode_id=$episodeId AND EpisodeActors.actor_id=actors.id"
 		));
 		return $episode;
+	}
+
+
+	public function getEpisodeActorsList($episodeId){
+		// Many to Many Relationship: Fetch data from Episode, EpisodeActors(link table), Actors
+		// Fetch actors of episode
+		$episode=Episode::model()->with('EpisodeActors','actors')->find(array(
+			'condition'=>"EpisodeActors.episode_id=$episodeId AND EpisodeActors.actor_id=actors.id"
+		));
+		$actors = "";
+		for ($i = 0; $i < count($episode->actors); $i++) {
+			if ($i) $actors .= ', ';
+			$actors .= $episode->actors[$i]->attributes['actor_name'];
+		}
+		return $actors;
 	}
 
 }

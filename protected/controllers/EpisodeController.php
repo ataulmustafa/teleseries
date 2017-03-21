@@ -37,7 +37,7 @@ class EpisodeController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','byseasons','details','seasons'),
+				'actions'=>array('index','view','byseasons','details','seasons','actors'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -182,6 +182,7 @@ class EpisodeController extends Controller
 
     public function actionBySeasons($id, $offset=0, $limit=0){
 		// Consume REST API
+//		echo $offset . ',' . $limit;exit;
 		$url = "http://localhost".Yii::app()->baseUrl . "/index.php/season/$id/episodes?offset=$offset&limit=$limit";
 		//  Initiate curl
 		$ch = curl_init();
@@ -211,7 +212,7 @@ class EpisodeController extends Controller
 		*/
     }
 
-	public function actionSeasons($id,$offset,$limit){
+	public function actionSeasons($id,$offset=0,$limit=0){
 		// Find Episodes of selected seasons
 //		$model = Episode::model()->getEpisodesBySeasonsCurl($id);
 
@@ -233,6 +234,18 @@ class EpisodeController extends Controller
 		}else{
 			$model = Episode::model()->getEpisodeDetail($id);
 			$this->render('details',array('data'=>$model));
+		}
+	}
+
+
+	public function actionActors($id){
+		$episodeId = Episode::model()->findByPk($id);
+		if (!$episodeId) {
+			throw new CHttpException(404,'The requested Episode not found.');
+		}else{
+			$model = Episode::model()->getEpisodeActorsList($id);
+			echo json_encode(array('status'=>'success','data'=>$model));
+			exit;
 		}
 	}
 }

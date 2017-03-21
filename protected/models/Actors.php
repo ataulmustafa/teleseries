@@ -45,6 +45,8 @@ class Actors extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'EpisodeActors' => array(self::HAS_MANY, 'TblEpisodeActors', 'actor_id'),
+			'EpisodeActors' => array(self::HAS_MANY, 'EpisodeActors', 'episode_id'),
+			'actors' => array(self::MANY_MANY, 'Actors', 'tbl_episode_actors(episode_id, actor_id)'),
 		);
 	}
 
