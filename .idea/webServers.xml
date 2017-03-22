@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="305e5acd-c648-4016-8cad-8ff9db178de7" name="BooxGen1" url="http://192.168.56.106">
+        <fileTransfer host="192.168.56.106" port="22" rootFolder="/home/ata" accessType="SFTP" password="dfcbdfdedfcb" username="ata">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

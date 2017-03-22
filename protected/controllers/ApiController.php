@@ -5,8 +5,10 @@
  * Date: 3/2/2017
  * Time: 6:29 PM
  */
+Yii::import('application.extensions.*');
+require_once('authentication/authentication.php');
 
-class ApiController extends Controller
+class ApiController extends CController
 {
     // Members
     /**
@@ -30,6 +32,7 @@ class ApiController extends Controller
     // Actions
     public function actionList()
     {
+        $this->_checkDigestAuth();
         $offset = (!array_key_exists('offset',$_GET)) ? 0 : $_GET['offset'];
         $limit = (!array_key_exists('limit',$_GET)) ? 0 : $_GET['limit'];
         $offset = ($offset<0 || empty($offset)) ? 0 : $offset;
@@ -257,6 +260,16 @@ class ApiController extends Controller
         } else if(!$user->validatePassword($password)) {
             // Error: Unauthorized
             $this->_sendResponse(401, 'Error: User Password is invalid');
+        }
+    }
+
+    private function _checkDigestAuth()
+    {
+        $auth = new authentication;
+        if(!$auth->loggedIn) {
+            $auth->authenticate();
+        } else {
+            // Allow access
         }
     }
 
